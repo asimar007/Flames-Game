@@ -52,9 +52,8 @@ export default function NotebookPage({ children }) {
       <div
         className="absolute top-2 right-4 z-10"
         style={{
-          fontFamily: "'Caveat', cursive",
           fontSize: 13,
-          color: "rgba(40,50,80,0.3)",
+          color: "#2563eb",
         }}
       >
         {new Date().toLocaleDateString("en-US", {

@@ -14,7 +14,6 @@ export default function ResultSection({ letter, name1, name2 }) {
       <div
         className="mb-1"
         style={{
-          fontFamily: "'Caveat', cursive",
           fontSize: 18,
           color: "rgba(40, 50, 80, 0.5)",
         }}
@@ -25,40 +24,33 @@ export default function ResultSection({ letter, name1, name2 }) {
       <div className="flex items-baseline gap-1.5 flex-wrap">
         <span
           className="text-xl"
-          style={{ fontFamily: "'Caveat', cursive", color: "#1a2a5e" }}
+          style={{ color: "var(--color-ink)" }}
         >
           {name1}
         </span>
         <span
           className="text-base"
-          style={{
-            fontFamily: "'Caveat', cursive",
-            color: "rgba(40,50,80,0.4)",
-          }}
+          style={{ color: "var(--color-muted)" }}
         >
           &amp;
         </span>
         <span
           className="text-xl"
-          style={{ fontFamily: "'Caveat', cursive", color: "#1a2a5e" }}
+          style={{ color: "var(--color-ink)" }}
         >
           {name2}
         </span>
         <span
           className="text-base"
-          style={{
-            fontFamily: "'Caveat', cursive",
-            color: "rgba(40,50,80,0.4)",
-          }}
+          style={{ color: "var(--color-muted)" }}
         >
           =
         </span>
         <span
           style={{
-            fontFamily: "'Caveat', cursive",
             fontSize: 32,
             fontWeight: 700,
-            color: "#c83232",
+            color: "var(--color-red)",
             textDecoration: "underline",
             textDecorationStyle: "wavy",
             textDecorationColor: "rgba(200, 50, 50, 0.3)",
@@ -73,7 +65,6 @@ export default function ResultSection({ letter, name1, name2 }) {
         <div
           className="mt-2 text-sm"
           style={{
-            fontFamily: "'Caveat', cursive",
             color: isPositive ? "rgba(200, 50, 50, 0.3)" : "rgba(40,50,80,0.3)",
             letterSpacing: isPositive ? 4 : 0,
           }}

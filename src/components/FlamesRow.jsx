@@ -22,10 +22,9 @@ export default function FlamesRow({
             key={i}
             className="relative inline-block transition-all duration-200"
             style={{
-              fontFamily: "'Caveat', cursive",
               fontSize: isFinal ? 34 : 28,
               fontWeight: 700,
-              color: isEliminated ? "rgba(200, 50, 50, 0.5)" : "#1a2a5e",
+              color: isEliminated ? "rgba(200, 50, 50, 0.5)" : "var(--color-ink)",
               letterSpacing: 6,
               lineHeight: 1.4,
               background: isHighlight

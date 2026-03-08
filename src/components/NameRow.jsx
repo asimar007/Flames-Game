@@ -18,10 +18,9 @@ export default function NameRow({ letters, cancelled, revealedUpTo }) {
               key={i}
               className="relative inline-block transition-colors duration-300"
               style={{
-                fontFamily: "'Caveat', cursive",
                 fontSize: 26,
                 fontWeight: 600,
-                color: showStrike ? "rgba(200, 50, 50, 0.65)" : "#1a2a5e",
+                color: showStrike ? "rgba(200, 50, 50, 0.65)" : "var(--color-ink)",
                 letterSpacing: 3,
                 lineHeight: 1.3,
               }}

@@ -17,11 +17,10 @@ export default function InputForm({
   };
 
   const inputStyle = {
-    fontFamily: "'Caveat', cursive",
     fontSize: 28,
     textTransform: "uppercase",
     fontWeight: 600,
-    color: "#1a2a5e",
+    color: "var(--color-ink)",
     borderBottomColor: "rgba(100,140,200,0.25)",
     padding: "2px 4px",
     letterSpacing: 6,
@@ -36,10 +35,7 @@ export default function InputForm({
       <div className="mb-4 flex items-baseline gap-2 flex-wrap">
         <label
           className="text-lg whitespace-nowrap font-medium"
-          style={{
-            fontFamily: "'Caveat', cursive",
-            color: "rgba(40,50,80,0.55)",
-          }}
+          style={{ color: "rgba(40,50,80,0.55)" }}
         >
           Your Name :
         </label>
@@ -59,10 +55,7 @@ export default function InputForm({
       <div className="mb-4 flex items-baseline gap-2 flex-wrap">
         <label
           className="text-lg whitespace-nowrap font-medium"
-          style={{
-            fontFamily: "'Caveat', cursive",
-            color: "rgba(40,50,80,0.55)",
-          }}
+          style={{ color: "rgba(40,50,80,0.55)" }}
         >
           Crush's Name :
         </label>
@@ -81,12 +74,11 @@ export default function InputForm({
       <button
         className="block mx-auto mt-5 rounded-md px-9 py-2 tracking-wide cursor-pointer transition-all duration-200 disabled:opacity-25 disabled:cursor-not-allowed hover:enabled:bg-[rgba(26,42,94,0.06)]"
         style={{
-          fontFamily: "'Caveat', cursive",
           fontSize: 19,
           fontWeight: 700,
-          color: "#1a2a5e",
+          color: "var(--color-ink)",
           background: "transparent",
-          border: "1.8px solid #1a2a5e",
+          border: "1.8px solid var(--color-ink)",
         }}
         disabled={!canPlay}
         onClick={onSubmit}

@@ -1,7 +1,7 @@
-const font = "'Caveat', cursive";
-const ink = "#1a2a5e";
-const red = "#c83232";
-const muted = "rgba(40,50,80,0.4)";
+const font = "var(--font-hand)";
+const ink = "var(--color-ink)";
+const red = "var(--color-red)";
+const muted = "var(--color-muted)";
 
 function Strike({ children }) {
   return (

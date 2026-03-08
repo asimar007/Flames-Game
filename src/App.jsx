@@ -26,35 +26,18 @@ export default function App() {
 
   return (
     <>
-      <style>{`
-        @keyframes penStrike {
-          from { stroke-dashoffset: 30; }
-          to { stroke-dashoffset: 0; }
-        }
-        @keyframes penCircle {
-          from { stroke-dashoffset: 120; }
-          to { stroke-dashoffset: 0; }
-        }
-        @keyframes inkFadeIn {
-          from { opacity: 0; }
-          to { opacity: 1; }
-        }
-        input::placeholder { letter-spacing: normal; }
-      `}</style>
-
       <div
         className="min-h-screen flex items-center justify-center p-6"
-        style={{ background: "#c8b99a", fontFamily: "'Caveat', cursive" }}
+        style={{ background: "#c8b99a" }}
       >
         <NotebookPage>
           {/* Title */}
           <h1
             className="text-center mb-0.5 tracking-widest"
             style={{
-              fontFamily: "'Caveat', cursive",
               fontSize: 32,
               fontWeight: 700,
-              color: "#1a2a5e",
+              color: "var(--color-ink)",
               marginLeft: -48,
             }}
           >
@@ -63,7 +46,6 @@ export default function App() {
           <p
             className="text-center mb-5"
             style={{
-              fontFamily: "'Caveat', cursive",
               fontSize: 15,
               color: "rgba(40,50,80,0.35)",
               marginLeft: -48,

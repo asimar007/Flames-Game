@@ -22,9 +22,8 @@ function StepLabel({ children }) {
     <p
       className="mb-1 pl-4 font-medium"
       style={{
-        fontFamily: "'Caveat', cursive",
         fontSize: 15,
-        color: "rgba(40,50,80,0.4)",
+        color: "var(--color-muted)",
       }}
     >
       {children}
@@ -81,9 +80,8 @@ export default function GameSteps({
           <div
             className="pl-4 my-2.5 animate-[inkFadeIn_0.4s_ease_both]"
             style={{
-              fontFamily: "'Caveat', cursive",
               fontSize: 20,
-              color: "#1a2a5e",
+              color: "var(--color-ink)",
             }}
           >
             Remaining ={" "}
@@ -92,7 +90,7 @@ export default function GameSteps({
               style={{
                 fontSize: 28,
                 fontWeight: 700,
-                color: "#c83232",
+                color: "var(--color-red)",
                 textUnderlineOffset: 3,
               }}
             >
@@ -124,19 +122,18 @@ export default function GameSteps({
           <button
             className="block mx-auto mt-4 rounded-md px-6 py-1.5 cursor-pointer transition-all duration-200"
             style={{
-              fontFamily: "'Caveat', cursive",
               fontSize: 16,
               fontWeight: 500,
-              color: "rgba(40,50,80,0.4)",
+              color: "var(--color-muted)",
               background: "transparent",
               border: "1px dashed rgba(40,50,80,0.2)",
             }}
             onMouseEnter={(e) => {
-              e.target.style.color = "#1a2a5e";
-              e.target.style.borderColor = "#1a2a5e";
+              e.target.style.color = "var(--color-ink)";
+              e.target.style.borderColor = "var(--color-ink)";
             }}
             onMouseLeave={(e) => {
-              e.target.style.color = "rgba(40,50,80,0.4)";
+              e.target.style.color = "var(--color-muted)";
               e.target.style.borderColor = "rgba(40,50,80,0.2)";
             }}
             onClick={onReset}
