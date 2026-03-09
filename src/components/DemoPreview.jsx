@@ -109,10 +109,10 @@ export default function DemoPreview() {
           marginBottom: 2,
         }}
       >
-        <Strike>R</Strike>
+        <span>R</span>
         <span>O</span>
         <span>M</span>
-        <span>E</span>
+        <Strike>E</Strike>
         <span>O</span>
       </div>
       <div
@@ -128,10 +128,10 @@ export default function DemoPreview() {
         }}
       >
         <span>J</span>
-        <Strike>U</Strike>
+        <span>U</span>
         <span>L</span>
         <span>I</span>
-        <span>E</span>
+        <Strike>E</Strike>
         <span>T</span>
       </div>
 
@@ -150,7 +150,7 @@ export default function DemoPreview() {
         style={{ fontFamily: font, fontSize: 16, color: ink, marginBottom: 10 }}
       >
         Remaining ={" "}
-        <span style={{ fontSize: 22, fontWeight: 700, color: red }}>7</span>
+        <span style={{ fontSize: 22, fontWeight: 700, color: red }}>9</span>
       </div>
 
       {/* Step 3 */}
@@ -196,7 +196,7 @@ export default function DemoPreview() {
       {/* Answer */}
       <div style={{ fontFamily: font, textAlign: "center" }}>
         <span style={{ fontSize: 13, color: muted }}>Answer: </span>
-        <span style={{ fontSize: 17, color: ink }}>ASIM &amp; PAYEL = </span>
+        <span style={{ fontSize: 17, color: ink }}>ROMEO &amp; JULIET = </span>
         <span style={{ fontSize: 22, fontWeight: 700, color: red }}>Enemy</span>
       </div>
     </div>
