@@ -30,7 +30,7 @@ export default function App() {
         className="min-h-screen flex items-center justify-center p-6"
         style={{ background: "#c8b99a" }}
       >
-        <NotebookPage>
+        <NotebookPage showSave={phase === "result"}>
           {/* Title */}
           <h1
             className="text-center mb-0.5 tracking-widest"
@@ -51,7 +51,7 @@ export default function App() {
               marginLeft: -48,
             }}
           >
-            ~ the love calculator ~
+            <span style={{ color: "var(--color-red)" }}>♡</span> let the letters decide <span style={{ color: "var(--color-red)" }}>♡</span>
           </p>
 
           {/* Input phase */}

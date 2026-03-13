@@ -1,10 +1,41 @@
+import { useRef, useState } from "react";
+import { toPng } from "html-to-image";
+
 /**
  * The notebook page container — handles the ruled paper look,
  * spiral binding holes, red margin, and date stamp.
  */
-export default function NotebookPage({ children }) {
+export default function NotebookPage({ children, showSave = false }) {
+  const notebookRef = useRef(null);
+  const [saving, setSaving] = useState(false);
+
+  async function handleSaveImage() {
+    if (!notebookRef.current || saving) return;
+    setSaving(true);
+    try {
+      const dataUrl = await toPng(notebookRef.current, {
+        pixelRatio: 2,
+        backgroundColor: "#fdf6e3",
+        // Run twice so web fonts are fully loaded on first pass
+        fetchRequestInit: { cache: "force-cache" },
+      });
+      // Second pass ensures fonts are embedded correctly
+      const dataUrl2 = await toPng(notebookRef.current, {
+        pixelRatio: 2,
+        backgroundColor: "#fdf6e3",
+      });
+      const link = document.createElement("a");
+      link.download = "flames-result.png";
+      link.href = dataUrl2;
+      link.click();
+    } finally {
+      setSaving(false);
+    }
+  }
+
   return (
     <div
+      ref={notebookRef}
       className="relative w-full max-w-lg overflow-hidden"
       style={{
         minHeight: 680,
@@ -65,6 +96,41 @@ export default function NotebookPage({ children }) {
 
       {/* Page content */}
       <div className="relative z-10">{children}</div>
+
+      {/* Save as Image — only when result is ready */}
+      {showSave && (
+        <div className="relative z-10 mt-6 flex justify-center">
+          <button
+            onClick={handleSaveImage}
+            disabled={saving}
+            style={{
+              fontSize: 13,
+              fontStyle: "italic",
+              color: saving ? "rgba(40,50,80,0.3)" : "rgba(40,50,80,0.4)",
+              background: "transparent",
+              border: "1px dashed rgba(40,50,80,0.2)",
+              borderRadius: 6,
+              padding: "5px 16px",
+              cursor: saving ? "default" : "pointer",
+              transition: "color 0.2s, border-color 0.2s",
+              letterSpacing: "0.03em",
+              fontFamily: "var(--font-hand)",
+            }}
+            onMouseEnter={(e) => {
+              if (!saving) {
+                e.currentTarget.style.color = "rgba(40,50,80,0.75)";
+                e.currentTarget.style.borderColor = "rgba(40,50,80,0.45)";
+              }
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.color = "rgba(40,50,80,0.4)";
+              e.currentTarget.style.borderColor = "rgba(40,50,80,0.2)";
+            }}
+          >
+            {saving ? "saving…" : "save as image"}
+          </button>
+        </div>
+      )}
     </div>
   );
 }

@@ -59,16 +59,18 @@ export default function GameSteps({
         letters={matchData.lettersA}
         cancelled={matchData.cancelledA}
         revealedUpTo={
-          phase === "matching" ? matchRevealIdx : matchData.pairs.length - 1
+          phase === "matching" ? matchRevealIdx : matchData.pairs.length * 2 - 1
         }
+        nameIndex={0}
         label={name1}
       />
       <NameRow
         letters={matchData.lettersB}
         cancelled={matchData.cancelledB}
         revealedUpTo={
-          phase === "matching" ? matchRevealIdx : matchData.pairs.length - 1
+          phase === "matching" ? matchRevealIdx : matchData.pairs.length * 2 - 1
         }
+        nameIndex={1}
         label={name2}
       />
 

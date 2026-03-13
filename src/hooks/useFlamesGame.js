@@ -59,9 +59,11 @@ export function useFlamesGame() {
       return;
     }
 
+    // Each pair has 2 sub-steps: first cross name1 letter, then name2 letter
+    const totalSteps = total * 2;
     let idx = 0;
     function next() {
-      if (idx >= total) {
+      if (idx >= totalSteps) {
         timerRef.current = setTimeout(() => setPhase("counting"), 800);
         return;
       }

@@ -35,7 +35,7 @@ export default function InputForm({
       <div className="mb-4 flex items-baseline gap-2 flex-wrap">
         <label
           className="text-lg whitespace-nowrap font-medium"
-          style={{ color: "rgba(40,50,80,0.55)" }}
+          style={{ color: "var(--color-ink)" }}
         >
           Your Name :
         </label>
@@ -55,7 +55,7 @@ export default function InputForm({
       <div className="mb-4 flex items-baseline gap-2 flex-wrap">
         <label
           className="text-lg whitespace-nowrap font-medium"
-          style={{ color: "rgba(40,50,80,0.55)" }}
+          style={{ color: "var(--color-ink)" }}
         >
           Crush's Name :
         </label>
