@@ -27,9 +27,20 @@ export default function App() {
   return (
     <>
       <div
-        className="min-h-screen flex items-start sm:items-center justify-center px-3 py-6 sm:p-6"
-        style={{ background: "#c8b99a" }}
+        className="relative min-h-screen flex items-start sm:items-center justify-center px-3 py-6 sm:p-6"
       >
+        {/* Blurred background layer */}
+        <div
+          className="fixed inset-0 -z-10"
+          style={{
+            backgroundImage: "url('/bg.jpg')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+            filter: "blur(3px)",
+            transform: "scale(1.05)",
+          }}
+        />
         <NotebookPage showSave={phase === "result"} crushName={name2.trim()}>
           {/* Title */}
           <h1
