@@ -5,13 +5,18 @@ import { toPng } from "html-to-image";
  * The notebook page container — handles the ruled paper look,
  * spiral binding holes, red margin, and date stamp.
  */
-export default function NotebookPage({ children, showSave = false, crushName = "" }) {
+export default function NotebookPage({
+  children,
+  showSave = false,
+  crushName = "",
+}) {
   const notebookRef = useRef(null);
   const [saving, setSaving] = useState(false);
 
   async function handleSaveImage() {
     if (!notebookRef.current || saving) return;
     setSaving(true);
+    notebookRef.current.classList.add("is-capturing");
     try {
       // First pass warms up font loading
       await toPng(notebookRef.current, {
@@ -25,10 +30,11 @@ export default function NotebookPage({ children, showSave = false, crushName = "
         backgroundColor: "#fdf6e3",
       });
       const link = document.createElement("a");
-      link.download = `${crushName ? crushName.toLowerCase() : "flames"}-result.png`;
+      link.download = `${crushName ? crushName.toLowerCase() : "flames"}-flames.png`;
       link.href = dataUrl2;
       link.click();
     } finally {
+      notebookRef.current.classList.remove("is-capturing");
       setSaving(false);
     }
   }
@@ -102,7 +108,10 @@ export default function NotebookPage({ children, showSave = false, crushName = "
 
       {/* Save as Image — absolutely positioned so it never affects notebook height */}
       {showSave && (
-        <div className="absolute z-10 bottom-5 flex justify-center" style={{ left: "var(--nb-pl)", right: "var(--nb-pr)" }}>
+        <div
+          className="absolute z-10 bottom-5 flex justify-center hide-on-save"
+          style={{ left: "var(--nb-pl)", right: "var(--nb-pr)" }}
+        >
           <button
             onClick={handleSaveImage}
             disabled={saving}

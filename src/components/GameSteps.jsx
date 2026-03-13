@@ -122,7 +122,7 @@ export default function GameSteps({
           <Divider />
           <ResultSection letter={resultLetter} name1={name1} name2={name2} />
           <button
-            className="block mx-auto mt-4 rounded-md px-6 py-1.5 cursor-pointer transition-all duration-200"
+            className="hide-on-save block mx-auto mt-4 rounded-md px-6 py-1.5 cursor-pointer transition-all duration-200"
             style={{
               fontSize: 16,
               fontWeight: 500,

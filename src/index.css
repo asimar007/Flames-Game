@@ -56,3 +56,4 @@ body {
   to { opacity: 1; }
 }
 input::placeholder { letter-spacing: normal; color: rgba(40, 50, 80, 0.3); }
+.is-capturing .hide-on-save { display: none; }
