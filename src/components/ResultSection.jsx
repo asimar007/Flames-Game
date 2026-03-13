@@ -48,7 +48,7 @@ export default function ResultSection({ letter, name1, name2 }) {
         </span>
         <span
           style={{
-            fontSize: 32,
+            fontSize: "var(--fs-flames-final)",
             fontWeight: 700,
             color: "var(--color-red)",
             textDecoration: "underline",
@@ -63,11 +63,8 @@ export default function ResultSection({ letter, name1, name2 }) {
 
       {emoji && (
         <div
-          className="mt-2 text-sm"
-          style={{
-            color: isPositive ? "rgba(200, 50, 50, 0.3)" : "rgba(40,50,80,0.3)",
-            letterSpacing: isPositive ? 4 : 0,
-          }}
+          className="mt-2 text-xl"
+          style={{ letterSpacing: isPositive ? 4 : 0 }}
         >
           {emoji}
         </div>

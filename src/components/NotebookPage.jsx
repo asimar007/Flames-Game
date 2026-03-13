@@ -5,7 +5,7 @@ import { toPng } from "html-to-image";
  * The notebook page container — handles the ruled paper look,
  * spiral binding holes, red margin, and date stamp.
  */
-export default function NotebookPage({ children, showSave = false }) {
+export default function NotebookPage({ children, showSave = false, crushName = "" }) {
   const notebookRef = useRef(null);
   const [saving, setSaving] = useState(false);
 
@@ -13,10 +13,10 @@ export default function NotebookPage({ children, showSave = false }) {
     if (!notebookRef.current || saving) return;
     setSaving(true);
     try {
-      const dataUrl = await toPng(notebookRef.current, {
+      // First pass warms up font loading
+      await toPng(notebookRef.current, {
         pixelRatio: 2,
         backgroundColor: "#fdf6e3",
-        // Run twice so web fonts are fully loaded on first pass
         fetchRequestInit: { cache: "force-cache" },
       });
       // Second pass ensures fonts are embedded correctly
@@ -25,7 +25,7 @@ export default function NotebookPage({ children, showSave = false }) {
         backgroundColor: "#fdf6e3",
       });
       const link = document.createElement("a");
-      link.download = "flames-result.png";
+      link.download = `${crushName ? crushName.toLowerCase() : "flames"}-result.png`;
       link.href = dataUrl2;
       link.click();
     } finally {
@@ -36,12 +36,15 @@ export default function NotebookPage({ children, showSave = false }) {
   return (
     <div
       ref={notebookRef}
-      className="relative w-full max-w-lg overflow-hidden"
+      className="relative w-full max-w-lg"
       style={{
-        minHeight: 680,
+        minHeight: "var(--nb-min-height)",
         background: "#fdf6e3",
         borderRadius: "4px 12px 12px 4px",
-        padding: "28px 24px 32px 72px",
+        paddingTop: 28,
+        paddingBottom: 32,
+        paddingLeft: "var(--nb-pl)",
+        paddingRight: "var(--nb-pr)",
         boxShadow: `-4px 0 0 #e8dcc8, -8px 0 0 #fdf6e3, -9px 0 0 #e8dcc8, -13px 0 0 #fdf6e3, -14px 0 0 #e8dcc8, 4px 4px 20px rgba(80,60,30,0.25), 0 0 0 1px rgba(80,60,30,0.1)`,
       }}
     >
@@ -73,7 +76,7 @@ export default function NotebookPage({ children, showSave = false }) {
       <div
         className="absolute top-0 bottom-0 pointer-events-none z-0"
         style={{
-          left: 62,
+          left: "var(--nb-margin)",
           width: 1.5,
           background: "rgba(220,80,80,0.28)",
         }}
@@ -97,9 +100,9 @@ export default function NotebookPage({ children, showSave = false }) {
       {/* Page content */}
       <div className="relative z-10">{children}</div>
 
-      {/* Save as Image — only when result is ready */}
+      {/* Save as Image — absolutely positioned so it never affects notebook height */}
       {showSave && (
-        <div className="relative z-10 mt-6 flex justify-center">
+        <div className="absolute z-10 bottom-5 flex justify-center" style={{ left: "var(--nb-pl)", right: "var(--nb-pr)" }}>
           <button
             onClick={handleSaveImage}
             disabled={saving}

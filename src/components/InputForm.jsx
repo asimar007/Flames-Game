@@ -17,13 +17,13 @@ export default function InputForm({
   };
 
   const inputStyle = {
-    fontSize: 28,
+    fontSize: "var(--fs-input)",
     textTransform: "uppercase",
     fontWeight: 600,
     color: "var(--color-ink)",
     borderBottomColor: "rgba(100,140,200,0.25)",
     padding: "2px 4px",
-    letterSpacing: 6,
+    letterSpacing: "var(--fs-input-spacing)",
   };
 
   const handleFocus = (e) => (e.target.style.borderBottomColor = "#1a2a5e");

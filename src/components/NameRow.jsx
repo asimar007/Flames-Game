@@ -19,7 +19,7 @@ export default function NameRow({ letters, cancelled, revealedUpTo, nameIndex = 
               key={i}
               className="relative inline-block transition-colors duration-300"
               style={{
-                fontSize: 26,
+                fontSize: "var(--fs-name)",
                 fontWeight: 600,
                 color: showStrike ? "rgba(200, 50, 50, 0.65)" : "var(--color-ink)",
                 letterSpacing: 3,

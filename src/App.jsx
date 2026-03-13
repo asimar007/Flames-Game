@@ -27,18 +27,18 @@ export default function App() {
   return (
     <>
       <div
-        className="min-h-screen flex items-center justify-center p-6"
+        className="min-h-screen flex items-start sm:items-center justify-center px-3 py-6 sm:p-6"
         style={{ background: "#c8b99a" }}
       >
-        <NotebookPage showSave={phase === "result"}>
+        <NotebookPage showSave={phase === "result"} crushName={name2.trim()}>
           {/* Title */}
           <h1
             className="text-center mb-0.5 tracking-widest"
             style={{
-              fontSize: 32,
+              fontSize: "var(--fs-title)",
               fontWeight: 700,
               color: "var(--color-ink)",
-              marginLeft: -48,
+              marginLeft: "var(--nb-title-offset)",
             }}
           >
             F.L.A.M.E.S
@@ -46,9 +46,9 @@ export default function App() {
           <p
             className="text-center mb-5"
             style={{
-              fontSize: 15,
+              fontSize: 14,
               color: "rgba(40,50,80,0.35)",
-              marginLeft: -48,
+              marginLeft: "var(--nb-title-offset)",
             }}
           >
             <span style={{ color: "var(--color-red)" }}>♡</span> let the letters decide <span style={{ color: "var(--color-red)" }}>♡</span>

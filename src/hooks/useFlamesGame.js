@@ -52,33 +52,38 @@ export function useFlamesGame() {
   // Phase 1: Reveal matched letter pairs one by one
   useEffect(() => {
     if (phase !== "matching" || !matchData) return;
+    let cancelled = false;
     const total = matchData.pairs.length;
 
     if (total === 0) {
-      timerRef.current = setTimeout(() => setPhase("counting"), 600);
-      return;
+      const t = setTimeout(() => { if (!cancelled) setPhase("counting"); }, 600);
+      return () => { cancelled = true; clearTimeout(t); };
     }
 
     // Each pair has 2 sub-steps: first cross name1 letter, then name2 letter
     const totalSteps = total * 2;
     let idx = 0;
+    let t;
     function next() {
+      if (cancelled) return;
       if (idx >= totalSteps) {
-        timerRef.current = setTimeout(() => setPhase("counting"), 800);
+        t = setTimeout(() => { if (!cancelled) setPhase("counting"); }, 800);
         return;
       }
       setMatchRevealIdx(idx);
       idx++;
-      timerRef.current = setTimeout(next, 500);
+      t = setTimeout(next, 500);
     }
-    timerRef.current = setTimeout(next, 400);
-    return () => clearTimeout(timerRef.current);
+    t = setTimeout(next, 400);
+    return () => { cancelled = true; clearTimeout(t); };
   }, [phase, matchData]);
 
   // Phase 2: Show remaining count, then prepare elimination
   useEffect(() => {
     if (phase !== "counting") return;
-    timerRef.current = setTimeout(() => {
+    let cancelled = false;
+    const t = setTimeout(() => {
+      if (cancelled) return;
       const remaining = matchData.remainingCount;
       const { order, finalIdx: fi } = getFlamesElimination(remaining);
       setElimOrder(order);
@@ -87,25 +92,29 @@ export function useFlamesGame() {
       setElimRevealIdx(-1);
       setPhase("eliminating");
     }, 1600);
-    return () => clearTimeout(timerRef.current);
+    return () => { cancelled = true; clearTimeout(t); };
   }, [phase, matchData]);
 
   // Phase 3: Animate FLAMES letter elimination
   useEffect(() => {
     if (phase !== "eliminating") return;
+    let cancelled = false;
     const remaining = matchData.remainingCount;
     let elimStep = 0;
     let alive = [0, 1, 2, 3, 4, 5];
     let countIdx = 0;
+    let t;
 
     function eliminateNext() {
+      if (cancelled) return;
       if (elimStep >= elimOrder.length) {
         setElimHighlight(-1);
-        timerRef.current = setTimeout(() => setPhase("result"), 500);
+        t = setTimeout(() => { if (!cancelled) setPhase("result"); }, 500);
         return;
       }
       let subCount = 0;
       function countTick() {
+        if (cancelled) return;
         if (subCount >= remaining) {
           const target = alive[countIdx % alive.length];
           setElimRevealIdx(elimStep);
@@ -113,18 +122,18 @@ export function useFlamesGame() {
           alive = alive.filter((x) => x !== target);
           elimStep++;
           if (alive.length > 0) countIdx = countIdx % alive.length;
-          timerRef.current = setTimeout(eliminateNext, 450);
+          t = setTimeout(eliminateNext, 450);
           return;
         }
         setElimHighlight(alive[countIdx % alive.length]);
         subCount++;
         countIdx++;
-        timerRef.current = setTimeout(countTick, 90);
+        t = setTimeout(countTick, 90);
       }
       countTick();
     }
-    timerRef.current = setTimeout(eliminateNext, 300);
-    return () => clearTimeout(timerRef.current);
+    t = setTimeout(eliminateNext, 300);
+    return () => { cancelled = true; clearTimeout(t); };
   }, [phase, elimOrder, matchData]);
 
   return {
