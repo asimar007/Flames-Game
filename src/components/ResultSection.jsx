@@ -1,12 +1,21 @@
+import { useEffect, useRef } from "react";
 import { FLAMES_FULL, POSITIVE_RESULTS, RESULT_EMOJI } from "../constants";
 
-/**
- * Shows the final result: "Name1 & Name2 = Love/Friends/etc."
- * Includes a small decorative emoji based on the outcome.
- */
 export default function ResultSection({ letter, name1, name2 }) {
+  const audioRef = useRef(null);
+
+  useEffect(() => {
+    const audio = new Audio(`/Audio/${letter}.mp3`);
+    audio.volume = 0.7;
+    audioRef.current = audio;
+    audio.play().catch(() => {});
+    return () => {
+      audio.pause();
+      audio.currentTime = 0;
+    };
+  }, [letter]);
   const label = FLAMES_FULL[letter];
-  const emoji = RESULT_EMOJI[letter];
+  const emoji  = RESULT_EMOJI[letter];
   const isPositive = POSITIVE_RESULTS.has(letter);
 
   return (
