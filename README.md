@@ -1,16 +1,63 @@
-# React + Vite
+# F.L.A.M.E.S — Let the Letters Decide ♡
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> The classic FLAMES love compatibility game — reimagined as an animated notebook experience.
 
-Currently, two official plugins are available:
+![F.L.A.M.E.S Preview](https://flames.asimsk.site/Meta.jpg)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+🔗 **Live:** [flames.asimsk.site](https://flames.asimsk.site)
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Overview
 
-## Expanding the ESLint configuration
+![App Preview](https://flames.asimsk.site/preview.jpg)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Enter two names and watch the notebook come alive — letters cancel each other out one by one, the FLAMES count animates, and your result is revealed with confetti and a matching soundtrack.
+
+**Results:** Friends · Love · Affection · Marriage · Enemy · Siblings
+
+---
+
+## Features
+
+- **Animated notebook UI** — ruled paper, spiral binding, red margin line, handwriting font
+
+- **Step-by-step letter cancellation** — letters cross out alternately between both names
+
+- **FLAMES elimination animation** — letters count and strike in real time
+
+- **Result-based audio** — unique song plays for each of the 6 outcomes
+
+- **Result-based confetti** — emoji fireworks from both sides matching the result
+
+- **Save as Image** — capture the full notebook result as a `.png`
+
+- **Fully responsive** — works on mobile, tablet, and desktop
+
+---
+
+## Audio Files
+
+Place your audio files in `/public/Audio/` named exactly by FLAMES letter:
+
+```text
+
+F.mp3 → Friends
+
+L.mp3 → Love
+
+A.mp3 → Affection
+
+M.mp3 → Marriage
+
+E.mp3 → Enemy
+
+S.mp3 → Siblings
+
+```
+
+---
+
+## Built by
+
+**Asim** · [Portfolio](https://www.asimsk.site)
