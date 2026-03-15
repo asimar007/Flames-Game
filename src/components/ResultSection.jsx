@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import { FLAMES_FULL, POSITIVE_RESULTS, RESULT_EMOJI } from "../constants";
+import { fireConfetti } from "../utils/confetti";
 
 export default function ResultSection({ letter, name1, name2 }) {
   const audioRef = useRef(null);
@@ -9,7 +10,12 @@ export default function ResultSection({ letter, name1, name2 }) {
     audio.volume = 0.7;
     audioRef.current = audio;
     audio.play().catch(() => {});
+
+    // Fire result-specific confetti after a short delay
+    const t = setTimeout(() => fireConfetti(letter), 400);
+
     return () => {
+      clearTimeout(t);
       audio.pause();
       audio.currentTime = 0;
     };
