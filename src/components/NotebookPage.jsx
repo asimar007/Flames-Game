@@ -106,6 +106,20 @@ export default function NotebookPage({
       {/* Page content */}
       <div className="relative z-10">{children}</div>
 
+      {/* Built by signature */}
+      <div
+        className="absolute bottom-3 right-4 z-10 pointer-events-none"
+        style={{
+          fontSize: 13,
+          color: "#2563eb",
+          fontStyle: "italic",
+          opacity: 0.55,
+          fontFamily: "var(--font-hand)",
+        }}
+      >
+        Build by Asim
+      </div>
+
       {/* Save as Image — absolutely positioned so it never affects notebook height */}
       {showSave && (
         <div

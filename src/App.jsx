@@ -26,9 +26,7 @@ export default function App() {
 
   return (
     <>
-      <div
-        className="relative min-h-screen flex items-start sm:items-center justify-center px-3 py-6 sm:p-6"
-      >
+      <div className="relative min-h-screen flex items-start sm:items-center justify-center px-3 py-6 sm:p-6">
         {/* Blurred background layer */}
         <div
           className="fixed inset-0 -z-10"
@@ -62,7 +60,8 @@ export default function App() {
               marginLeft: "var(--nb-title-offset)",
             }}
           >
-            <span style={{ color: "var(--color-red)" }}>♡</span> let the letters decide <span style={{ color: "var(--color-red)" }}>♡</span>
+            <span style={{ color: "var(--color-red)" }}>♡</span> let the letters
+            decide <span style={{ color: "var(--color-red)" }}>♡</span>
           </p>
 
           {/* Input phase */}
