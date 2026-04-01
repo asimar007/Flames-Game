@@ -1,23 +1,25 @@
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { FLAMES_FULL, POSITIVE_RESULTS, RESULT_EMOJI } from "../constants";
 import { fireConfetti } from "../utils/confetti";
+import { globalAudio } from "../utils/audio";
 
 export default function ResultSection({ letter, name1, name2 }) {
-  const audioRef = useRef(null);
-
   useEffect(() => {
-    const audio = new Audio(`/Audio/${letter}.mp3`);
-    audio.volume = 0.7;
-    audioRef.current = audio;
-    audio.play().catch(() => {});
+    if (globalAudio) {
+      globalAudio.src = `/Audio/${letter}.mp3`;
+      globalAudio.volume = 0.7;
+      globalAudio.play().catch(() => {});
+    }
 
     // Fire result-specific confetti after a short delay
     const t = setTimeout(() => fireConfetti(letter), 400);
 
     return () => {
       clearTimeout(t);
-      audio.pause();
-      audio.currentTime = 0;
+      if (globalAudio) {
+        globalAudio.pause();
+        globalAudio.currentTime = 0;
+      }
     };
   }, [letter]);
   const label = FLAMES_FULL[letter];

@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { getMatchedPairs, getFlamesElimination } from "../utils/flamesLogic";
+import { unlockAudio } from "../utils/audio";
 import { FLAMES } from "../constants";
 
 /**
@@ -40,6 +41,7 @@ export function useFlamesGame() {
   };
 
   const startGame = useCallback(() => {
+    unlockAudio();
     const a = name1.trim();
     const b = name2.trim();
     if (!a || !b) return;
