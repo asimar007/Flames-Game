@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import { toPng } from "html-to-image";
+import { setMuted } from "../utils/audio";
 
 /**
  * The notebook page container — handles the ruled paper look,
@@ -9,9 +10,17 @@ export default function NotebookPage({
   children,
   showSave = false,
   crushName = "",
+  isMuted = false,
+  setIsMuted = () => {},
 }) {
   const notebookRef = useRef(null);
   const [saving, setSaving] = useState(false);
+
+  const toggleMute = () => {
+    const nextMute = !isMuted;
+    setIsMuted(nextMute);
+    setMuted(nextMute);
+  };
 
   async function handleSaveImage() {
     if (!notebookRef.current || saving) return;
@@ -102,6 +111,16 @@ export default function NotebookPage({
           year: "numeric",
         })}
       </div>
+
+      {/* Mute Toggle */}
+      <button
+        onClick={toggleMute}
+        className="absolute top-8 right-4 text-lg opacity-60 hover:opacity-100 transition-opacity focus:outline-none z-10 hide-on-save"
+        title={isMuted ? "Unmute sound" : "Mute sound"}
+        aria-label={isMuted ? "Unmute sound" : "Mute sound"}
+      >
+        {isMuted ? "🔇" : "🔊"}
+      </button>
 
       {/* Page content */}
       <div className="relative z-10">{children}</div>

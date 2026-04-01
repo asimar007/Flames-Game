@@ -1,6 +1,13 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { getMatchedPairs, getFlamesElimination } from "../utils/flamesLogic";
-import { unlockAudio } from "../utils/audio";
+import {
+  unlockAudio,
+  preloadAudio,
+  stopGlobalAudio,
+  playScratch,
+  playTick,
+  playEliminate,
+} from "../utils/audio";
 import { FLAMES } from "../constants";
 
 /**
@@ -27,6 +34,7 @@ export function useFlamesGame() {
   );
 
   const resetGame = () => {
+    stopGlobalAudio(); // smoothly stop the music
     clearTimeout(timerRef.current);
     setName1("");
     setName2("");
@@ -73,6 +81,7 @@ export function useFlamesGame() {
         return;
       }
       setMatchRevealIdx(idx);
+      playScratch(); // micro-sfx for crossing out logic
       idx++;
       t = setTimeout(next, 500);
     }
@@ -91,6 +100,7 @@ export function useFlamesGame() {
       setElimOrder(order);
       setFinalIdx(fi);
       setResultLetter(FLAMES[fi]);
+      preloadAudio(FLAMES[fi]); // dynamically preload the final result song!
       setElimRevealIdx(-1);
       setPhase("eliminating");
     }, 1600);
@@ -120,6 +130,7 @@ export function useFlamesGame() {
         if (subCount >= remaining) {
           const target = alive[countIdx % alive.length];
           setElimRevealIdx(elimStep);
+          playEliminate(); // big pop for elimination
           setElimHighlight(-1);
           alive = alive.filter((x) => x !== target);
           elimStep++;
@@ -128,6 +139,7 @@ export function useFlamesGame() {
           return;
         }
         setElimHighlight(alive[countIdx % alive.length]);
+        playTick(); // smal tick for shifting highlight
         subCount++;
         countIdx++;
         t = setTimeout(countTick, 90);

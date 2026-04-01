@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { NotebookPage, InputForm, GameSteps } from "./components";
 import { useFlamesGame } from "./hooks/useFlamesGame";
 
@@ -7,6 +8,7 @@ import { useFlamesGame } from "./hooks/useFlamesGame";
  * NotebookPage, InputForm, and GameSteps.
  */
 export default function App() {
+  const [isMuted, setIsMuted] = useState(false);
   const {
     name1,
     name2,
@@ -39,7 +41,12 @@ export default function App() {
             transform: "scale(1.05)",
           }}
         />
-        <NotebookPage showSave={phase === "result"} crushName={name2.trim()}>
+        <NotebookPage
+          showSave={phase === "result"}
+          crushName={name2.trim()}
+          isMuted={isMuted}
+          setIsMuted={setIsMuted}
+        >
           {/* Title */}
           <h1
             className="text-center mb-0.5 tracking-widest"
