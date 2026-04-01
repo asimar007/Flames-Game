@@ -27,21 +27,24 @@ export default function NotebookPage({
     setSaving(true);
     notebookRef.current.classList.add("is-capturing");
     try {
-      // First pass warms up font loading
+      // First pass warms up font loading / style compilation
       await toPng(notebookRef.current, {
         pixelRatio: 2,
         backgroundColor: "#fdf6e3",
-        fetchRequestInit: { cache: "force-cache" },
+        fetchRequestInit: { cache: "no-cache" },
       });
-      // Second pass ensures fonts are embedded correctly
+      // Second pass ensures fonts are fully embedded into the serialized SVG
       const dataUrl2 = await toPng(notebookRef.current, {
         pixelRatio: 2,
         backgroundColor: "#fdf6e3",
+        fetchRequestInit: { cache: "no-cache" },
       });
       const link = document.createElement("a");
       link.download = `${crushName ? crushName.toLowerCase() : "flames"}-flames.png`;
       link.href = dataUrl2;
       link.click();
+    } catch (err) {
+      console.error("Failed to save image", err);
     } finally {
       notebookRef.current.classList.remove("is-capturing");
       setSaving(false);

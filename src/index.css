@@ -1,5 +1,5 @@
 @import "tailwindcss";
-
+@import "./caveat-font.css";
 :root {
   --font-hand: 'Caveat', cursive;
   --color-ink: #1a2a5e;
