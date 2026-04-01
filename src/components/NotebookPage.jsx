@@ -115,7 +115,8 @@ export default function NotebookPage({
       {/* Mute Toggle */}
       <button
         onClick={toggleMute}
-        className="absolute top-8 right-4 text-lg opacity-60 hover:opacity-100 transition-opacity focus:outline-none z-10 hide-on-save"
+        className="absolute top-7 right-2 p-3 text-xl opacity-60 hover:opacity-100 transition-opacity focus:outline-none z-30 cursor-pointer hide-on-save"
+        style={{ WebkitTapHighlightColor: "transparent" }}
         title={isMuted ? "Unmute sound" : "Mute sound"}
         aria-label={isMuted ? "Unmute sound" : "Mute sound"}
       >
