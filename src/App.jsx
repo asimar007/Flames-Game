@@ -1,5 +1,7 @@
 import { useState } from "react";
-import { NotebookPage, InputForm, GameSteps } from "./components";
+import NotebookPage from "./components/NotebookPage";
+import InputForm from "./components/InputForm";
+import GameSteps from "./components/GameSteps";
 import { useFlamesGame } from "./hooks/useFlamesGame";
 
 /**
@@ -9,97 +11,65 @@ import { useFlamesGame } from "./hooks/useFlamesGame";
  */
 export default function App() {
   const [isMuted, setIsMuted] = useState(false);
-  const {
-    name1,
-    name2,
-    setName1,
-    setName2,
-    phase,
-    matchData,
-    matchRevealIdx,
-    elimHighlight,
-    eliminatedSet,
-    finalIdx,
-    resultLetter,
-    canPlay,
-    startGame,
-    resetGame,
-  } = useFlamesGame();
+  const game = useFlamesGame();
 
   return (
-    <>
-      <div className="relative min-h-screen flex items-start sm:items-center justify-center px-3 py-6 sm:p-6">
-        {/* Blurred background layer */}
-        <div
-          className="fixed inset-0 -z-10"
+    <div className="relative min-h-screen flex items-start sm:items-center justify-center px-3 py-6 sm:p-6">
+      {/* Blurred background layer */}
+      <div
+        className="fixed inset-0 -z-10"
+        style={{
+          backgroundImage: "url('/bg.jpg')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+          filter: "blur(3px)",
+          transform: "scale(1.05)",
+        }}
+      />
+      <NotebookPage
+        showSave={game.phase === "result"}
+        crushName={game.name2.trim()}
+        isMuted={isMuted}
+        setIsMuted={setIsMuted}
+      >
+        {/* Title */}
+        <h1
+          className="text-center mb-0.5 tracking-widest"
           style={{
-            backgroundImage: "url('/bg.jpg')",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            backgroundRepeat: "no-repeat",
-            filter: "blur(3px)",
-            transform: "scale(1.05)",
+            fontSize: "var(--fs-title)",
+            fontWeight: 700,
+            color: "var(--color-ink)",
+            marginLeft: "var(--nb-title-offset)",
           }}
-        />
-        <NotebookPage
-          showSave={phase === "result"}
-          crushName={name2.trim()}
-          isMuted={isMuted}
-          setIsMuted={setIsMuted}
         >
-          {/* Title */}
-          <h1
-            className="text-center mb-0.5 tracking-widest"
-            style={{
-              fontSize: "var(--fs-title)",
-              fontWeight: 700,
-              color: "var(--color-ink)",
-              marginLeft: "var(--nb-title-offset)",
-            }}
-          >
-            F.L.A.M.E.S
-          </h1>
-          <p
-            className="text-center mb-5"
-            style={{
-              fontSize: 14,
-              color: "rgba(40,50,80,0.35)",
-              marginLeft: "var(--nb-title-offset)",
-            }}
-          >
-            <span style={{ color: "var(--color-red)" }}>♡</span> let the letters
-            decide <span style={{ color: "var(--color-red)" }}>♡</span>
-          </p>
+          F.L.A.M.E.S
+        </h1>
+        <p
+          className="text-center mb-5"
+          style={{
+            fontSize: 14,
+            color: "rgba(40,50,80,0.35)",
+            marginLeft: "var(--nb-title-offset)",
+          }}
+        >
+          <span style={{ color: "var(--color-red)" }}>♡</span> let the letters
+          decide <span style={{ color: "var(--color-red)" }}>♡</span>
+        </p>
 
-          {/* Input phase */}
-          {phase === "input" && (
-            <InputForm
-              name1={name1}
-              name2={name2}
-              setName1={setName1}
-              setName2={setName2}
-              canPlay={canPlay}
-              onSubmit={startGame}
-            />
-          )}
+        {/* Input phase */}
+        {game.phase === "input" && <InputForm {...game} onSubmit={game.startGame} />}
 
-          {/* Game animation phases */}
-          {phase !== "input" && matchData && (
-            <GameSteps
-              phase={phase}
-              matchData={matchData}
-              matchRevealIdx={matchRevealIdx}
-              name1={name1.trim()}
-              name2={name2.trim()}
-              elimHighlight={elimHighlight}
-              eliminatedSet={eliminatedSet}
-              finalIdx={finalIdx}
-              resultLetter={resultLetter}
-              onReset={resetGame}
-            />
-          )}
-        </NotebookPage>
-      </div>
-    </>
+        {/* Game animation phases */}
+        {game.phase !== "input" && game.matchData && (
+          <GameSteps
+            {...game}
+            name1={game.name1.trim()}
+            name2={game.name2.trim()}
+            onReset={game.resetGame}
+          />
+        )}
+      </NotebookPage>
+    </div>
   );
 }

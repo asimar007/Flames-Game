@@ -57,3 +57,21 @@ body {
 }
 input::placeholder { letter-spacing: normal; color: rgba(40, 50, 80, 0.3); }
 .is-capturing .hide-on-save { display: none; }
+
+.name-input { border-bottom-color: rgba(100, 140, 200, 0.25); }
+.name-input:focus { border-bottom-color: var(--color-ink); }
+
+/* Dashed pen-sketch buttons — hover handled by CSS, not JS style mutation. */
+.ink-btn,
+.save-btn {
+  background: transparent;
+  cursor: pointer;
+  border-color: rgba(40, 50, 80, 0.2);
+  transition: color 0.2s, border-color 0.2s;
+}
+.ink-btn { color: var(--color-muted); }
+.ink-btn:hover { color: var(--color-ink); border-color: var(--color-ink); }
+
+.save-btn { color: rgba(40, 50, 80, 0.4); }
+.save-btn:hover:not(:disabled) { color: rgba(40, 50, 80, 0.75); border-color: rgba(40, 50, 80, 0.45); }
+.save-btn:disabled { color: rgba(40, 50, 80, 0.3); cursor: default; }

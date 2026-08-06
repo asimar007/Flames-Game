@@ -1,64 +1,17 @@
+import NameRow from "./NameRow";
+import FlamesRow from "./FlamesRow";
+
 const font = "var(--font-hand)";
 const ink = "var(--color-ink)";
 const red = "var(--color-red)";
 const muted = "var(--color-muted)";
 
-function Strike({ children }) {
-  return (
-    <span
-      style={{
-        position: "relative",
-        color: "rgba(200,50,50,0.75)",
-        display: "inline-block",
-      }}
-    >
-      {children}
-      <svg
-        style={{
-          position: "absolute",
-          left: -1,
-          right: -1,
-          top: "50%",
-          width: "calc(100% + 2px)",
-          height: 10,
-          transform: "translateY(-50%)",
-          overflow: "visible",
-        }}
-      >
-        <line
-          x1="0"
-          y1="5"
-          x2="100%"
-          y2="4"
-          stroke={red}
-          strokeWidth="1.5"
-          strokeLinecap="round"
-        />
-      </svg>
-    </span>
-  );
-}
-
-function Circle({ children }) {
-  return (
-    <span style={{ position: "relative", display: "inline-block", color: ink }}>
-      <span
-        style={{
-          position: "absolute",
-          inset: "-5px -7px",
-          border: `1.8px solid ${red}`,
-          borderRadius: "50%",
-          display: "block",
-        }}
-      />
-      {children}
-    </span>
-  );
-}
+const stepLabel = { fontFamily: font, fontSize: 12, color: muted, marginBottom: 4 };
 
 /**
- * Demo preview card shown below the input form
- * to illustrate what the game output looks like.
+ * Demo preview card shown below the input form to illustrate what the game
+ * output looks like. Renders the real NameRow/FlamesRow at demo scale, so the
+ * sample can never drift from the actual output.
  */
 export default function DemoPreview() {
   return (
@@ -69,14 +22,17 @@ export default function DemoPreview() {
         borderRadius: 8,
         padding: "14px 18px",
         background: "rgba(40,50,80,0.02)",
+        // Scale the shared rows down to sample size.
+        "--fs-name": "21px",
+        "--fs-flames": "21px",
+        "--fs-flames-final": "21px",
       }}
     >
       {/* Header */}
       <p
         style={{
-          fontFamily: font,
+          ...stepLabel,
           fontSize: 11,
-          color: muted,
           textAlign: "center",
           letterSpacing: 2,
           marginBottom: 12,
@@ -86,110 +42,35 @@ export default function DemoPreview() {
         ~ sample output ~
       </p>
 
-      {/* Step 1 */}
-      <p
-        style={{
-          fontFamily: font,
-          fontSize: 12,
-          color: muted,
-          marginBottom: 4,
-        }}
-      >
-        Step 1) Cancel common letters:
-      </p>
-      <div
-        style={{
-          display: "flex",
-          gap: 8,
-          fontFamily: font,
-          fontSize: 21,
-          fontWeight: 600,
-          letterSpacing: 3,
-          color: ink,
-          marginBottom: 2,
-        }}
-      >
-        <span>R</span>
-        <span>O</span>
-        <span>M</span>
-        <Strike>E</Strike>
-        <span>O</span>
-      </div>
-      <div
-        style={{
-          display: "flex",
-          gap: 8,
-          fontFamily: font,
-          fontSize: 21,
-          fontWeight: 600,
-          letterSpacing: 3,
-          color: ink,
-          marginBottom: 10,
-        }}
-      >
-        <span>J</span>
-        <span>U</span>
-        <span>L</span>
-        <span>I</span>
-        <Strike>E</Strike>
-        <span>T</span>
-      </div>
+      {/* Step 1 — ROMEO / JULIET with the shared E cancelled */}
+      <p style={stepLabel}>Step 1) Cancel common letters:</p>
+      <NameRow letters={[..."ROMEO"]} cancelled={new Set([3])} revealedUpTo={Infinity} />
+      <NameRow letters={[..."JULIET"]} cancelled={new Set([4])} revealedUpTo={Infinity} />
 
       {/* Step 2 */}
-      <p
-        style={{
-          fontFamily: font,
-          fontSize: 12,
-          color: muted,
-          marginBottom: 2,
-        }}
-      >
+      <p style={{ ...stepLabel, marginTop: 10, marginBottom: 2 }}>
         Step 2) Count remaining letters:
       </p>
-      <div
-        style={{ fontFamily: font, fontSize: 16, color: ink, marginBottom: 10 }}
-      >
+      <div style={{ fontFamily: font, fontSize: 16, color: ink, marginBottom: 10 }}>
         Remaining ={" "}
         <span style={{ fontSize: 22, fontWeight: 700, color: red }}>9</span>
       </div>
 
-      {/* Step 3 */}
-      <p
-        style={{
-          fontFamily: font,
-          fontSize: 12,
-          color: muted,
-          marginBottom: 6,
-        }}
-      >
-        Step 3) Count &amp; cancel in FLAMES:
-      </p>
-      <div
-        style={{
-          display: "flex",
-          gap: 10,
-          fontFamily: font,
-          fontSize: 21,
-          fontWeight: 700,
-          letterSpacing: 3,
-          marginBottom: 10,
-        }}
-      >
-        {["F", "L", "A", "M", "E", "S"].map((ch, i) =>
-          i === 4 ? (
-            <Circle key={i}>{ch}</Circle>
-          ) : (
-            <Strike key={i}>{ch}</Strike>
-          ),
-        )}
-      </div>
+      {/* Step 3 — every letter struck but E */}
+      <p style={{ ...stepLabel, marginBottom: 6 }}>Step 3) Count &amp; cancel in FLAMES:</p>
+      <FlamesRow
+        eliminatedSet={new Set([0, 1, 2, 3, 5])}
+        currentHighlight={-1}
+        finalIdx={4}
+        phase="result"
+      />
 
       {/* Divider */}
       <hr
         style={{
           border: "none",
           borderTop: "1px dashed rgba(40,50,80,0.15)",
-          marginBottom: 10,
+          margin: "10px 0",
         }}
       />
 

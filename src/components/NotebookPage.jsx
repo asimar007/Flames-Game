@@ -27,21 +27,15 @@ export default function NotebookPage({
     setSaving(true);
     notebookRef.current.classList.add("is-capturing");
     try {
-      // First pass warms up font loading / style compilation
-      await toPng(notebookRef.current, {
-        pixelRatio: 2,
-        backgroundColor: "#fdf6e3",
-        fetchRequestInit: { cache: "no-cache" },
-      });
-      // Second pass ensures fonts are fully embedded into the serialized SVG
-      const dataUrl2 = await toPng(notebookRef.current, {
+      await document.fonts.ready; // fonts must be loaded before they can be embedded
+      const dataUrl = await toPng(notebookRef.current, {
         pixelRatio: 2,
         backgroundColor: "#fdf6e3",
         fetchRequestInit: { cache: "no-cache" },
       });
       const link = document.createElement("a");
       link.download = `${crushName ? crushName.toLowerCase() : "flames"}-flames.png`;
-      link.href = dataUrl2;
+      link.href = dataUrl;
       link.click();
     } catch (err) {
       console.error("Failed to save image", err);
@@ -152,28 +146,11 @@ export default function NotebookPage({
           <button
             onClick={handleSaveImage}
             disabled={saving}
+            className="save-btn rounded-md border border-dashed px-4 py-1.25 italic"
             style={{
               fontSize: 13,
-              fontStyle: "italic",
-              color: saving ? "rgba(40,50,80,0.3)" : "rgba(40,50,80,0.4)",
-              background: "transparent",
-              border: "1px dashed rgba(40,50,80,0.2)",
-              borderRadius: 6,
-              padding: "5px 16px",
-              cursor: saving ? "default" : "pointer",
-              transition: "color 0.2s, border-color 0.2s",
               letterSpacing: "0.03em",
               fontFamily: "var(--font-hand)",
-            }}
-            onMouseEnter={(e) => {
-              if (!saving) {
-                e.currentTarget.style.color = "rgba(40,50,80,0.75)";
-                e.currentTarget.style.borderColor = "rgba(40,50,80,0.45)";
-              }
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.color = "rgba(40,50,80,0.4)";
-              e.currentTarget.style.borderColor = "rgba(40,50,80,0.2)";
             }}
           >
             {saving ? "saving…" : "save as image"}

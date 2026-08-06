@@ -1,9 +1,8 @@
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { getMatchedPairs, getFlamesElimination } from "../utils/flamesLogic";
 import {
   unlockAudio,
   preloadAudio,
-  stopGlobalAudio,
   playScratch,
   playTick,
   playEliminate,
@@ -25,7 +24,6 @@ export function useFlamesGame() {
   const [elimHighlight, setElimHighlight] = useState(-1);
   const [finalIdx, setFinalIdx] = useState(-1);
   const [resultLetter, setResultLetter] = useState(null);
-  const timerRef = useRef(null);
 
   const canPlay = name1.trim().length > 0 && name2.trim().length > 0;
 
@@ -33,9 +31,8 @@ export function useFlamesGame() {
     elimRevealIdx >= 0 ? elimOrder.slice(0, elimRevealIdx + 1) : [],
   );
 
+  // ResultSection's effect cleanup stops the music when it unmounts on phase change.
   const resetGame = () => {
-    stopGlobalAudio(); // smoothly stop the music
-    clearTimeout(timerRef.current);
     setName1("");
     setName2("");
     setPhase("input");
@@ -48,16 +45,15 @@ export function useFlamesGame() {
     setResultLetter(null);
   };
 
-  const startGame = useCallback(() => {
+  const startGame = () => {
     unlockAudio();
     const a = name1.trim();
     const b = name2.trim();
     if (!a || !b) return;
-    const data = getMatchedPairs(a, b);
-    setMatchData(data);
+    setMatchData(getMatchedPairs(a, b));
     setMatchRevealIdx(-1);
     setPhase("matching");
-  }, [name1, name2]);
+  };
 
   // Phase 1: Reveal matched letter pairs one by one
   useEffect(() => {

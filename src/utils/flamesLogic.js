@@ -11,7 +11,7 @@ export function getMatchedPairs(n1, n2) {
 
   for (let i = 0; i < a.length; i++) {
     for (let j = 0; j < b.length; j++) {
-      if (!cancelledB.has(j) && a[i].toLowerCase() === b[j].toLowerCase() && !cancelledA.has(i)) {
+      if (!cancelledB.has(j) && a[i] === b[j]) {
         cancelledA.add(i);
         cancelledB.add(j);
         pairs.push({ ai: i, bj: j, letter: a[i] });

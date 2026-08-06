@@ -1,16 +1,8 @@
 import confetti from "canvas-confetti";
-
-const RESULT_EMOJIS = {
-  F: ["👫", "🤝", "😄", "🎉", "🫂"],
-  L: ["❤️", "💕", "💘", "💝", "😍"],
-  A: ["🥰", "💗", "🌸", "💞", "😘"],
-  M: ["💍", "💒", "👰", "🎊", "🥂"],
-  E: ["😤", "💢", "⚡", "🔥", "😡"],
-  S: ["😂", "😂", "😂", "😂", "🙃"],
-};
+import { RESULTS } from "../constants";
 
 export function fireConfetti(letter) {
-  const emojis = RESULT_EMOJIS[letter];
+  const emojis = RESULTS[letter]?.confetti;
   if (!emojis) return;
 
   const scalar = 2;

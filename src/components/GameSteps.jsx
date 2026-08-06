@@ -62,7 +62,6 @@ export default function GameSteps({
           phase === "matching" ? matchRevealIdx : matchData.pairs.length * 2 - 1
         }
         nameIndex={0}
-        label={name1}
       />
       <NameRow
         letters={matchData.lettersB}
@@ -71,7 +70,6 @@ export default function GameSteps({
           phase === "matching" ? matchRevealIdx : matchData.pairs.length * 2 - 1
         }
         nameIndex={1}
-        label={name2}
       />
 
       {/* Step 2: Count remaining letters */}
@@ -122,22 +120,8 @@ export default function GameSteps({
           <Divider />
           <ResultSection letter={resultLetter} name1={name1} name2={name2} />
           <button
-            className="hide-on-save block mx-auto mt-4 rounded-md px-6 py-1.5 cursor-pointer transition-all duration-200"
-            style={{
-              fontSize: 16,
-              fontWeight: 500,
-              color: "var(--color-muted)",
-              background: "transparent",
-              border: "1px dashed rgba(40,50,80,0.2)",
-            }}
-            onMouseEnter={(e) => {
-              e.target.style.color = "var(--color-ink)";
-              e.target.style.borderColor = "var(--color-ink)";
-            }}
-            onMouseLeave={(e) => {
-              e.target.style.color = "var(--color-muted)";
-              e.target.style.borderColor = "rgba(40,50,80,0.2)";
-            }}
+            className="hide-on-save ink-btn block mx-auto mt-4 rounded-md border border-dashed px-6 py-1.5"
+            style={{ fontSize: 16, fontWeight: 500 }}
             onClick={onReset}
           >
             try again?

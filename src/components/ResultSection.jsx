@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { FLAMES_FULL, POSITIVE_RESULTS, RESULT_EMOJI } from "../constants";
+import { RESULTS } from "../constants";
 import { fireConfetti } from "../utils/confetti";
 import { globalAudio } from "../utils/audio";
 
@@ -22,9 +22,7 @@ export default function ResultSection({ letter, name1, name2 }) {
       }
     };
   }, [letter]);
-  const label = FLAMES_FULL[letter];
-  const emoji  = RESULT_EMOJI[letter];
-  const isPositive = POSITIVE_RESULTS.has(letter);
+  const { name: label, emoji, positive } = RESULTS[letter];
 
   return (
     <div className="mt-2 pl-4 animate-[inkFadeIn_0.6s_ease_both]">
@@ -81,7 +79,7 @@ export default function ResultSection({ letter, name1, name2 }) {
       {emoji && (
         <div
           className="mt-2 text-xl"
-          style={{ letterSpacing: isPositive ? 4 : 0 }}
+          style={{ letterSpacing: positive ? 4 : 0 }}
         >
           {emoji}
         </div>
