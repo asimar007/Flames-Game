@@ -1,7 +1,4 @@
-/**
- * Find matching letter pairs between two names and cancel them out.
- * Returns the cancelled indices, remaining letters, and count.
- */
+// Cancel each shared letter once, returning the cancelled indices and what's left.
 export function getMatchedPairs(n1, n2) {
   const a = [...n1.toUpperCase().replace(/[^A-Z]/g, "")];
   const b = [...n2.toUpperCase().replace(/[^A-Z]/g, "")];
@@ -33,12 +30,9 @@ export function getMatchedPairs(n1, n2) {
   };
 }
 
-/**
- * Simulate the FLAMES elimination process.
- * Counts through 6 letters, removing one each round,
- * until a single letter remains.
- */
+// Josephus walk over FLAMES: count off `count` letters, strike one, repeat until one survives.
 export function getFlamesElimination(count) {
+  // count === 0 would make the modulo go negative, so use a fixed order.
   if (count === 0) return { order: [0, 2, 4, 1, 3], finalIdx: 5 };
 
   let letters = [0, 1, 2, 3, 4, 5];

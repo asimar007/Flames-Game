@@ -11,7 +11,6 @@ export default function ResultSection({ letter, name1, name2 }) {
       globalAudio.play().catch(() => {});
     }
 
-    // Fire result-specific confetti after a short delay
     const t = setTimeout(() => fireConfetti(letter), 400);
 
     return () => {

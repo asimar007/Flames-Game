@@ -3,7 +3,6 @@ export const globalAudio = typeof Audio !== "undefined" ? new Audio() : null;
 let audioUnlocked = false;
 let isMuted = false;
 
-// AudioContext for synthesized SFX
 let audioCtx = null;
 function getAudioContext() {
   if (typeof window === "undefined") return null;
@@ -26,7 +25,7 @@ export function setMuted(mute) {
   }
 }
 
-// Warm the HTTP cache so the result song starts instantly; the browser cache dedupes repeats.
+// Warm the HTTP cache so the result song starts instantly.
 export function preloadAudio(letter) {
   if (typeof Audio === "undefined") return;
   new Audio(`/Audio/${letter}.mp3`).load();
@@ -35,21 +34,19 @@ export function preloadAudio(letter) {
 export function unlockAudio() {
   if (!globalAudio || audioUnlocked) return;
 
-  getAudioContext(); // Initialize AC
+  getAudioContext();
 
-  // Play a silent base64 audio to unlock the audio element on iOS/Safari
-  // Without this, play() will be blocked when called programmatically later.
+  // iOS/Safari blocks programmatic play() until the element has played once
+  // from a user gesture, so play a silent clip here.
   globalAudio.src = "data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA";
   globalAudio.play().then(() => {
     globalAudio.pause();
     globalAudio.currentTime = 0;
     audioUnlocked = true;
-  }).catch(() => {
-    // Ignore errors that might occur
-  });
+  }).catch(() => {});
 }
 
-// Synthesized SFX: one oscillator swept from f0 to f1, gain popped to peak then back to 0.
+// One oscillator swept f0 to f1, gain popped to peak then back to 0.
 function beep(type, f0, f1, peak, dur) {
   if (isMuted) return;
   const ctx = getAudioContext();

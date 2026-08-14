@@ -2,9 +2,6 @@ import NameRow from "./NameRow";
 import FlamesRow from "./FlamesRow";
 import ResultSection from "./ResultSection";
 
-/**
- * Shared dashed divider between steps.
- */
 function Divider() {
   return (
     <hr
@@ -14,9 +11,6 @@ function Divider() {
   );
 }
 
-/**
- * Section label styled as handwritten notebook text.
- */
 function StepLabel({ children }) {
   return (
     <p
@@ -31,10 +25,7 @@ function StepLabel({ children }) {
   );
 }
 
-/**
- * Renders all game steps: letter matching, remaining count,
- * FLAMES elimination, and the final result.
- */
+// All game steps: letter matching, remaining count, elimination, result.
 export default function GameSteps({
   phase,
   matchData,
@@ -53,7 +44,6 @@ export default function GameSteps({
 
   return (
     <div>
-      {/* Step 1: Cancel common letters */}
       <StepLabel>Step 1) Cancel common letters:</StepLabel>
       <NameRow
         letters={matchData.lettersA}
@@ -72,7 +62,6 @@ export default function GameSteps({
         nameIndex={1}
       />
 
-      {/* Step 2: Count remaining letters */}
       {showCount && (
         <>
           <Divider />
@@ -100,7 +89,6 @@ export default function GameSteps({
         </>
       )}
 
-      {/* Step 3: FLAMES elimination */}
       {showElim && (
         <>
           <Divider />
@@ -114,7 +102,6 @@ export default function GameSteps({
         </>
       )}
 
-      {/* Final Result */}
       {phase === "result" && resultLetter && (
         <>
           <Divider />

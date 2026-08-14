@@ -2,10 +2,7 @@ import { useRef, useState } from "react";
 import { toPng } from "html-to-image";
 import { setMuted } from "../utils/audio";
 
-/**
- * The notebook page container — handles the ruled paper look,
- * spiral binding holes, red margin, and date stamp.
- */
+// The ruled-paper container: binding holes, margin line, date stamp, save button.
 export default function NotebookPage({
   children,
   showSave = false,
@@ -27,7 +24,7 @@ export default function NotebookPage({
     setSaving(true);
     notebookRef.current.classList.add("is-capturing");
     try {
-      await document.fonts.ready; // fonts must be loaded before they can be embedded
+      await document.fonts.ready; // fonts must load before they can be embedded
       const dataUrl = await toPng(notebookRef.current, {
         pixelRatio: 2,
         backgroundColor: "#fdf6e3",
@@ -137,7 +134,7 @@ export default function NotebookPage({
         Build by Asim
       </div>
 
-      {/* Save as Image — absolutely positioned so it never affects notebook height */}
+      {/* Absolutely positioned so it never affects notebook height */}
       {showSave && (
         <div
           className="absolute z-10 bottom-5 flex justify-center hide-on-save"

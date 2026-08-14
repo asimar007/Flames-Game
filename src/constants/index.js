@@ -1,7 +1,6 @@
 export const FLAMES = "FLAMES";
 
-// One entry per letter: full label, the emoji shown under the answer,
-// whether it's a happy outcome, and the confetti particle set.
+// One entry per FLAMES letter.
 export const RESULTS = {
   F: { name: "Friends", emoji: ":)", positive: false, confetti: ["👫", "🤝", "😄", "🎉", "🫂"] },
   L: { name: "Love", emoji: "♡ ♡ ♡", positive: true, confetti: ["❤️", "💕", "💘", "💝", "😍"] },

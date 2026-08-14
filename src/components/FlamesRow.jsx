@@ -1,9 +1,6 @@
 import { FLAMES } from "../constants";
 
-/**
- * Displays the six FLAMES letters with animated elimination.
- * Highlights the current counting position and circles the final result.
- */
+// The six FLAMES letters: highlights the counting position, circles the survivor.
 export default function FlamesRow({
   eliminatedSet,
   currentHighlight,
@@ -36,7 +33,6 @@ export default function FlamesRow({
           >
             {ch}
 
-            {/* Strike-through for eliminated letters */}
             {isEliminated && (
               <svg
                 className="absolute overflow-visible"
@@ -63,7 +59,6 @@ export default function FlamesRow({
               </svg>
             )}
 
-            {/* Circle around the final surviving letter */}
             {isFinal && (
               <svg
                 className="absolute pointer-events-none overflow-visible"

@@ -4,11 +4,7 @@ import InputForm from "./components/InputForm";
 import GameSteps from "./components/GameSteps";
 import { useFlamesGame } from "./hooks/useFlamesGame";
 
-/**
- * Root component for the FLAMES game.
- * All logic lives in useFlamesGame hook; UI is composed from
- * NotebookPage, InputForm, and GameSteps.
- */
+// Root component. All game logic lives in the useFlamesGame hook.
 export default function App() {
   const [isMuted, setIsMuted] = useState(false);
   const game = useFlamesGame();
@@ -33,7 +29,6 @@ export default function App() {
         isMuted={isMuted}
         setIsMuted={setIsMuted}
       >
-        {/* Title */}
         <h1
           className="text-center mb-0.5 tracking-widest"
           style={{
@@ -57,10 +52,8 @@ export default function App() {
           decide <span style={{ color: "var(--color-red)" }}>♡</span>
         </p>
 
-        {/* Input phase */}
         {game.phase === "input" && <InputForm {...game} onSubmit={game.startGame} />}
 
-        {/* Game animation phases */}
         {game.phase !== "input" && game.matchData && (
           <GameSteps
             {...game}

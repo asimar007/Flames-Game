@@ -1,6 +1,4 @@
-/**
- * Animated red pen strike-through line drawn over a letter.
- */
+// Animated red pen strike drawn over a letter.
 export default function PenStrike({ width = 4, height = 12 }) {
   return (
     <svg

@@ -1,9 +1,6 @@
 import DemoPreview from "./DemoPreview";
 
-/**
- * Two handwriting-style input fields for entering names,
- * plus the "Calculate" button.
- */
+// The two name fields plus the Calculate button.
 export default function InputForm({
   name1,
   name2,

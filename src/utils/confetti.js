@@ -6,12 +6,11 @@ export function fireConfetti(letter) {
   if (!emojis) return;
 
   const scalar = 2;
-  // Mac/Safari struggles with high number of custom DOM-based/canvas particles.
+  // Safari chokes on many emoji particles, so mix cheap shapes in to look full.
   const emojiShapes = emojis.map((text) => confetti.shapeFromText({ text, scalar }));
-  // Mix in some standard shapes to make it performant and look fuller without the heavy cost
   const shapes = [...emojiShapes, 'circle', 'square'];
 
-  const end = Date.now() + 3000; // fire for 3 seconds
+  const end = Date.now() + 3000;
 
   (function frame() {
     // Left cannon
@@ -41,7 +40,7 @@ export function fireConfetti(letter) {
     });
 
     if (Date.now() < end) {
-      // Throttle firing to every 150ms instead of 16ms to avoid Safari lag
+      // 150ms instead of a rAF frame — Safari lags at 16ms.
       setTimeout(frame, 150);
     }
   })();

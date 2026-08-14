@@ -9,10 +9,7 @@ import {
 } from "../utils/audio";
 import { FLAMES } from "../constants";
 
-/**
- * Custom hook that manages the entire FLAMES game lifecycle:
- * input → matching → counting → eliminating → result
- */
+// Drives the game phases: input, matching, counting, eliminating, result.
 export function useFlamesGame() {
   const [name1, setName1] = useState("");
   const [name2, setName2] = useState("");
@@ -31,7 +28,7 @@ export function useFlamesGame() {
     elimRevealIdx >= 0 ? elimOrder.slice(0, elimRevealIdx + 1) : [],
   );
 
-  // ResultSection's effect cleanup stops the music when it unmounts on phase change.
+  // ResultSection's cleanup stops the music when it unmounts on phase change.
   const resetGame = () => {
     setName1("");
     setName2("");
@@ -55,7 +52,7 @@ export function useFlamesGame() {
     setPhase("matching");
   };
 
-  // Phase 1: Reveal matched letter pairs one by one
+  // Reveal matched letter pairs one by one.
   useEffect(() => {
     if (phase !== "matching" || !matchData) return;
     let cancelled = false;
@@ -66,7 +63,7 @@ export function useFlamesGame() {
       return () => { cancelled = true; clearTimeout(t); };
     }
 
-    // Each pair has 2 sub-steps: first cross name1 letter, then name2 letter
+    // Two sub-steps per pair: cross the name1 letter, then the name2 letter.
     const totalSteps = total * 2;
     let idx = 0;
     let t;
@@ -77,7 +74,7 @@ export function useFlamesGame() {
         return;
       }
       setMatchRevealIdx(idx);
-      playScratch(); // micro-sfx for crossing out logic
+      playScratch();
       idx++;
       t = setTimeout(next, 500);
     }
@@ -85,7 +82,7 @@ export function useFlamesGame() {
     return () => { cancelled = true; clearTimeout(t); };
   }, [phase, matchData]);
 
-  // Phase 2: Show remaining count, then prepare elimination
+  // Hold on the remaining count, then set up the elimination.
   useEffect(() => {
     if (phase !== "counting") return;
     let cancelled = false;
@@ -96,14 +93,14 @@ export function useFlamesGame() {
       setElimOrder(order);
       setFinalIdx(fi);
       setResultLetter(FLAMES[fi]);
-      preloadAudio(FLAMES[fi]); // dynamically preload the final result song!
+      preloadAudio(FLAMES[fi]);
       setElimRevealIdx(-1);
       setPhase("eliminating");
     }, 1600);
     return () => { cancelled = true; clearTimeout(t); };
   }, [phase, matchData]);
 
-  // Phase 3: Animate FLAMES letter elimination
+  // Animate the FLAMES elimination: count off, strike, repeat.
   useEffect(() => {
     if (phase !== "eliminating") return;
     let cancelled = false;
@@ -126,7 +123,7 @@ export function useFlamesGame() {
         if (subCount >= remaining) {
           const target = alive[countIdx % alive.length];
           setElimRevealIdx(elimStep);
-          playEliminate(); // big pop for elimination
+          playEliminate();
           setElimHighlight(-1);
           alive = alive.filter((x) => x !== target);
           elimStep++;
@@ -135,7 +132,7 @@ export function useFlamesGame() {
           return;
         }
         setElimHighlight(alive[countIdx % alive.length]);
-        playTick(); // smal tick for shifting highlight
+        playTick();
         subCount++;
         countIdx++;
         t = setTimeout(countTick, 90);

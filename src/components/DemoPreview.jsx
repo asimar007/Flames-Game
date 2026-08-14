@@ -8,11 +8,7 @@ const muted = "var(--color-muted)";
 
 const stepLabel = { fontFamily: font, fontSize: 12, color: muted, marginBottom: 4 };
 
-/**
- * Demo preview card shown below the input form to illustrate what the game
- * output looks like. Renders the real NameRow/FlamesRow at demo scale, so the
- * sample can never drift from the actual output.
- */
+// Sample output card. Uses the real NameRow/FlamesRow so it can't drift from the game.
 export default function DemoPreview() {
   return (
     <div
